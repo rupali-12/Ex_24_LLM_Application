@@ -6,6 +6,10 @@ import os
 from langserve import add_routes
 from dotenv import load_dotenv
 load_dotenv()
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
 
 groq_api_key=os.getenv("GROQ_API_KEY")
 model=ChatGroq(model="Gemma2-9b-It",groq_api_key=groq_api_key)
@@ -28,6 +32,15 @@ chain=prompt_template|model|parser
 app=FastAPI(title="Langchain Server",
             version="1.0",
             description="A simple API server using Langchain runnable interfaces")
+
+# Add CORS middleware to your FastAPI app
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://ex24llmapplication-k8az6hqp9pf8gtopa6vbm4.streamlit.app"],  # Replace with your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 ## Adding chain routes
 add_routes(

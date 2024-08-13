@@ -11,7 +11,8 @@ def get_groq_response(input_text):
   "config": {},
   "kwargs": {}
 }
-    response=requests.post("http://127.0.0.1:8000/chain/invoke",json=json_body)
+    # response=requests.post("http://127.0.0.1:8000/chain/invoke",json=json_body)   // for localhost
+    response=requests.post("https://ex-24-llm-application.onrender.com/chain/invoke",json=json_body)
 
     response_json=response.json()
     output = response_json["output"]
